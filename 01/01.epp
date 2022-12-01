@@ -1,0 +1,9 @@
+.range -4000000000 4000000000
+
+.node Home
+
+.home Home
+
+.file "input.txt" Home 300 ro word int
+
+.start X1
