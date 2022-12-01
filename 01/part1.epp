@@ -1,0 +1,52 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+;.file "demo" Home 300 ro word int
+.file "input" Home 300 ro word int
+
+
+; ------------------------------------------------------------------------------
+.start X1
+
+grab 300
+
+mark read_lp
+  test eof
+  fjmp not_eof
+  kill
+  halt
+
+  mark not_eof
+  test f > 0
+  tjmp add_val
+  copy x m
+  copy 0 x
+  jump read_lp
+
+  mark add_val
+  seek -1
+  addi x f x
+  jump read_lp
+
+; ------------------------------------------------------------------------------
+.start X2
+
+make
+copy 0 f
+seek -1
+
+mark write_lp
+  copy m x
+;  dump me
+  test x > f
+  seek -1
+  tjmp new_max_val
+  jump write_lp
+
+  mark new_max_val
+  copy x f
+  seek -1
+  jump write_lp

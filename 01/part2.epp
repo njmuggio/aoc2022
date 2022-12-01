@@ -1,0 +1,80 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+;.file "demo" Home 300 ro word int
+.file "input" Home 300 ro word int
+
+
+; ------------------------------------------------------------------------------
+.start X1
+
+grab 300
+
+mark read_lp
+  test eof
+  fjmp not_eof
+  kill
+
+  copy 0 x
+  grab 400
+  repl scribe
+  mark find_largest_lp
+    test eof
+    tjmp found_largest
+
+    test f > x
+    fjmp find_largest_lp
+
+    seek -1
+    copy f x
+    jump find_largest_lp
+
+  mark found_largest
+    copy x m
+    seek -4000000
+    mark erase_lp
+      test eof
+      tjmp end_erase_lp
+      test f = x
+      fjmp erase_lp
+      seek -1
+      void f
+      jump erase_lp
+    mark end_erase_lp
+    seek -4000000
+    copy 0 x
+    jump find_largest_lp
+
+
+  mark not_eof
+  test f > 0
+  tjmp add_val
+  copy x m
+  copy 0 x
+  jump read_lp
+
+  mark add_val
+  seek -1
+  addi x f x
+  jump read_lp
+
+
+mark scribe
+make
+addi m x x
+addi m x x
+addi m x f
+kill
+
+
+; ------------------------------------------------------------------------------
+.start X2
+
+make
+
+mark write_lp
+  copy m f
+  jump write_lp
