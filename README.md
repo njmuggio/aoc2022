@@ -13,5 +13,6 @@ cmake --build bin
 To run a solution (day 1, part 2 in this example):
 
 ```sh
-bin/epp 01/part2.epp
+cd 01
+../bin/epp 01/part2.epp
 ```

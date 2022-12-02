@@ -1,0 +1,31 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+.file "demo" Home 300 ro word int
+;.file "input" Home 300 ro word int
+
+.file "aux-data.txt" Home 301 ro word int
+
+; ------------------------------------------------------------------------------
+.start RuleBook
+
+grab 300
+mark lp
+copy f m
+dump me
+jump lp
+
+.start blackhole
+mark lp
+void m
+noop
+noop
+noop
+noop
+noop
+noop
+noop
+jump lp

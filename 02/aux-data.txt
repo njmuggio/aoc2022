@@ -1,0 +1,6 @@
+A X Z
+B Y X
+C Z Y
+X 1
+Y 2
+Z 3

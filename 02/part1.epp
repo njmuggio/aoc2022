@@ -1,0 +1,100 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+;.file "demo" Home 300 ro word int
+.file "input" Home 300 ro word int
+
+.file "aux-data.txt" Home 301 ro word int
+
+; ------------------------------------------------------------------------------
+.start RuleBook
+
+; 3x Opponent's move, our equivalent, our loss
+; 3x Our move, score
+grab 301
+
+mark game_lp
+; Opponent's move
+  copy m x
+  seek -1000
+  mark opp_lp
+    test x = f
+    fjmp opp_lp
+
+; Our move to X
+  copy m x
+  test x = f ; Did we play the same thing?
+  tjmp tie
+  test x = f ; Did we play a losing move?
+  tjmp lose
+
+; Win
+  mode
+  copy 6 m
+  jump move_score
+
+  mark tie
+  mode
+  copy 3 m
+  jump move_score
+
+  mark lose
+  mode
+  copy 0 m
+; fallthrough
+
+  mark move_score
+  seek -9999
+  seek 9
+  mark move_score_lp
+    test f = x
+    fjmp move_score_lp
+  copy f m
+  mode
+  jump game_lp
+
+
+; ------------------------------------------------------------------------------
+.start Player
+
+grab 300
+mark lp
+;  copy f x
+;  copy x m
+  copy f m
+;  copy f x
+;  copy x m
+  copy f m
+  test eof
+  fjmp lp
+
+drop
+
+@rep 1000
+noop
+@end
+
+kill
+kill
+
+grab 400
+copy 0 x
+mark lp2
+  addi f x x
+  test eof
+  fjmp lp2
+seek -9999
+copy x f
+
+
+; ------------------------------------------------------------------------------
+.start Scribe
+
+make
+mode
+mark lp
+copy m f
+jump lp
