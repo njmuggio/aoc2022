@@ -2,8 +2,10 @@
 
 *This repository contains my solutions for [AOC2022](https://adventofcode.com/2022).*
 
-The solutions are written in [exa++](https://github.com/njmuggio/exaplusplus).
-The code for the interpreter is a submodule of this repository. To build:
+The solutions for the first two days are written in [exa++](https://github.com/njmuggio/exaplusplus).
+I discovered a major bug with a non-trivial fix in the exa++ interpreter, so I switched to (shoddy) python starting on day 3.
+
+The code for the exa++ interpreter is a submodule of this repository. To build:
 
 ```sh
 cmake -S exaplusplus -B bin
