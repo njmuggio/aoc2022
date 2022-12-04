@@ -1,0 +1,23 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+.file "demo" Home 300 ro word int
+;.file "input" Home 300 ro word int
+
+;.file "aux-data.txt" Home 301 ro word int
+
+; ------------------------------------------------------------------------------
+.start InputManager
+
+grab 300
+test m = f
+
+.start hole
+
+@rep 1000
+noop
+@end
+copy 0 m

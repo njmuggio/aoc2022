@@ -1,0 +1,113 @@
+.range -4000000 4000000
+
+.node Home
+
+.home Home
+
+;.file "demo" Home 300 ro word int
+.file "input" Home 300 ro word int
+
+.file "aux-alphabet.txt" Home 301 ro word int
+
+; ------------------------------------------------------------------------------
+.start InputManager
+
+grab 300
+
+mark outer_lp
+
+  copy 0 x
+  mark line_len_lp
+    addi 1 x x
+    test f = 0
+    fjmp line_len_lp
+
+  muli -1 x x
+  seek x
+  divi x -2 x
+
+  copy x t
+  repl gather_compartments
+  mark first_half_lp
+    copy f m
+    addi -1 t t
+    tjmp first_half_lp
+
+  copy x t
+  mark second_half_lp
+    copy f m
+    addi -1 t t
+    tjmp second_half_lp
+
+  seek 1
+  copy 50 t
+  mark stall_1
+    addi -1 t t
+    tjmp stall_1
+  test eof
+  fjmp outer_lp
+
+drop
+copy 200 t
+mark stall_2
+  addi -1 t t
+  tjmp stall_2
+kill
+halt
+
+
+
+mark gather_compartments
+make
+
+mark gather_c1_lp
+  copy m f
+  addi -1 t t
+  tjmp gather_c1_lp
+
+mark compare_c2_out_lp
+  seek -9999
+  copy m x
+  mark compare_c2_in_lp
+    test eof
+    tjmp compare_c2_out_lp
+    test f = x
+    fjmp compare_c2_in_lp
+
+mark void_lp
+  test mrd
+  fjmp gather_end
+  void m
+  jump void_lp
+
+mark gather_end
+mode
+copy x m
+
+
+; ------------------------------------------------------------------------------
+.start Accountant
+
+make
+copy 0 f
+drop
+
+mode
+
+mark outer_lp
+  grab 301
+  copy m x
+  seek -9999
+  mark search_lp
+    test f = x
+    fjmp search_lp
+  copy f x
+  drop
+
+  grab 400
+  addi f x x
+  seek -1
+  copy x f
+  drop
+
+  jump outer_lp
